@@ -1,15 +1,7 @@
-# Basic Sample Hardhat Project
+# TunesArt
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+A bunch of smart contracts aiming to extend and build on (Tunes Project) [https://tunesproject.org]
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+These contracts aim at providing a way for people to extend the Tunes project.
+The NFTs are blank intentioanally to support 3rd party derivatives. These cotracts allow 3rd perty devs to store metadata like album art, songs, lyric and artist metadata.
+This also provides a template for devs to build NFT representations of Derived Tunes, pegged to the original Tunes. These derived NFTs are non transferrable independently and change ownership when the official TUNES nft changes ownership. 
