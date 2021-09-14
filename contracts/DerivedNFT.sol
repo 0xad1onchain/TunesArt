@@ -8,16 +8,24 @@ import 'base64-sol/base64.sol';
 import "./TunesMetadata.sol";
 
 
-contract DerivedTune is IERC721, ERC165, IERC721Metadata {
+contract DerivedTune is ERC165, IERC721Metadata {
     
 
-    IERC721Enumerable public tunes = IERC721Enumerable(0x52B1dd5c27705aa4DFd3889db223b5C4c84f6B54);
-    TunesMetadata public tunesMetadata = TunesMetadata(0xe665f007f1f472073541539c35AC774dB6855853);
+    IERC721Enumerable public tunes;
+    TunesMetadata public tunesMetadata;
 
-    address public metadataRegistryDevAddress = 0xc0a227a440aA6432aFeC59423Fd68BD00cAbB529;
+    address public metadataRegistryDevAddress;
 
-    string private _name = "Derived Tunes";
-    string private _symbol = "DTUNE";
+    string private _name;
+    string private _symbol;
+
+    constructor(address tunesOfficialAddress, address tunesMetadataAddress, address devAddress, string memory name, string memory symbol) {
+        tunes = IERC721Enumerable(tunesOfficialAddress);
+        tunesMetadata = TunesMetadata(tunesMetadataAddress);
+        metadataRegistryDevAddress = devAddress;
+        _name = name;
+        _symbol = symbol;
+    }
 
     function name() public view virtual override returns (string memory) {
         return _name;
@@ -35,18 +43,14 @@ contract DerivedTune is IERC721, ERC165, IERC721Metadata {
         return tunes.balanceOf(owner);
     }
 
-
     function ownerOf(uint256 tokenId) public override view returns (address owner) {
         return tunes.ownerOf(tokenId);
     }
-
     function getApproved(uint256 tokenId) public view override returns (address operator) {
         return tunes.getApproved(tokenId);
     }
 
-    function isApprovedForAll(address owner, address operator) public override view returns (bool) {
-        return tunes.isApprovedForAll(owner, operator);
-    }
+
 
     // Before using this, set this metadata on the TunesMetadata contract.
     // Make sure to use the standard keys like name, description and image to maintain 3rd party viewers support.
@@ -80,11 +84,15 @@ contract DerivedTune is IERC721, ERC165, IERC721Metadata {
     }
 
 
-
     //  ==========================================================
     //          Muted methods to make ERC721 interface work
     //  ==========================================================
 
+    function isApprovedForAll(address owner, address operator) public override view returns (bool) {
+        require(false, "DerivedTune is not a transferable");
+        return false;
+    }
+    
     function approve(address to, uint256 tokenId) public override {
         require(false, "DerivedTune is not a transferable");
     }
